@@ -53,7 +53,7 @@ static String stampa;
 
     static int mySpesa() {
         int ris = 0;
-        String strmov = JOptionPane.showInputDialog("dimmi valore movimento (es. 0,1 o 250)");
+        String strspese = JOptionPane.showInputDialog("dimmi valore movimento (es. 0,1 o 250)");
 
         return ris;
     }
