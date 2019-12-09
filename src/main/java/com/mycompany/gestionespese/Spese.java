@@ -15,9 +15,9 @@ import javax.swing.JOptionPane;
 public class Spese {
 
     static int spese[];
-    static int anticipoValuta;
-    static String stampa;
+    static String stampaReport;
     static int totale;
+    static int anticipoValuta;
 
     /**
      * @param args the command line arguments
@@ -30,12 +30,12 @@ public class Spese {
 
         //caricare le spese chieste nel metodo getSpese
         getSpese();
+        totale = stampaReport();
         printSpese();
 // stampare l'output
-        String schedaSpese = printSpese();
-        JOptionPane.showMessageDialog(null, schedaSpese);
+        JOptionPane.showMessageDialog(null, printSpese());
         anticipoValuta();
-
+        JOptionPane.showMessageDialog(null, anticipoValuta());
     }
 
     static void getSpese() {
@@ -46,29 +46,36 @@ public class Spese {
         }
     }
 
-  
+    static int stampaReport() {
+        int newsaldo = 0;
+        for (int i = 0; i < spese.length; i++) {
+            newsaldo = newsaldo + spese[i];
+            stampaReport += (i + 1) + " - " + spese[i];
+        }
+        return newsaldo;
+
+    }
 
     static String printSpese() {
-        String ris = "Elenco spese";
-        int totale = 0;
+        String output = " Elenco spese: ";
         for (int i = 0; i < spese.length; i++) {
-            stampa += (i + 1) + " - " + spese[i];
-            totale = totale + spese[i];
-
+            output += "il saldo è di" + totale;
         }
-
-        ris = ris + totale + "\n";
-        
-        if (anticipoValuta > totale) {
-            stampa += "avanzati Euro" + (anticipoValuta - totale);
-        } else {
-            stampa += "devi Euro" + (totale - anticipoValuta);
-        }
-        return ris;
+        return output;
     }
-    
-      static void anticipoValuta() {
+
+    static String anticipoValuta() {
+        String avanzo = " ";
         String strAnticipo = JOptionPane.showInputDialog("dimmi quanto hai anticipato");
-    }
 
+        if (anticipoValuta > totale) {
+            avanzo += printSpese() + "avanzati Euro" + (anticipoValuta - totale);
+        } else {
+            avanzo += printSpese() + "devi Euro" + (totale - anticipoValuta);
+        }
+
+        avanzo = printSpese() + totale + "\n";
+
+        return avanzo;
+    }
 }
