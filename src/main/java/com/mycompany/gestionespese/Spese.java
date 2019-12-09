@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class Spese {
 
     static int spese[];
-    static String stampaReport;
+    static String stampaTotale;
     static int totale;
     static int anticipoValuta;
 
@@ -30,7 +30,7 @@ public class Spese {
 
         //caricare le spese chieste nel metodo getSpese
         getSpese();
-        totale = stampaReport();
+        totale = saldoTotale();
         printSpese();
 // stampare l'output
         JOptionPane.showMessageDialog(null, printSpese());
@@ -46,11 +46,10 @@ public class Spese {
         }
     }
 
-    static int stampaReport() {
+    static int saldoTotale() {
         int newsaldo = 0;
         for (int i = 0; i < spese.length; i++) {
             newsaldo = newsaldo + spese[i];
-            stampaReport += (i + 1) + " - " + spese[i];
         }
         return newsaldo;
 
@@ -58,10 +57,13 @@ public class Spese {
 
     static String printSpese() {
         String output = " Elenco spese: ";
+
         for (int i = 0; i < spese.length; i++) {
+            totale += (i+1) + spese [i];
+            stampaTotale += totale + " - " + spese[i];
             output += "il saldo è di" + totale;
         }
-        return output;
+return output;
     }
 
     static String anticipoValuta() {
@@ -74,7 +76,7 @@ public class Spese {
             avanzo += printSpese() + "devi Euro" + (totale - anticipoValuta);
         }
 
-        avanzo = printSpese() + totale + "\n";
+        avanzo = printSpese() + avanzo + "\n";
 
         return avanzo;
     }
