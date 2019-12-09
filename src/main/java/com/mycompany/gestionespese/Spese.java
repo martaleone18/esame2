@@ -14,89 +14,61 @@ import javax.swing.JOptionPane;
  */
 public class Spese {
 
-    static int[] spese;
-    static int max_spese = 8;
-    static int totale = 0;
+    static int spese[];
     static int anticipoValuta;
-    static int reportSpese;
-static String stampa;
+    static String stampa;
+    static int totale;
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        spese = new int[max_spese];
+
+        //caricare un massimo di otto spese
+        spese = new int[8];
+
+        //caricare le spese chieste nel metodo getSpese
         getSpese();
-        ottieniAnticipoValuta();
-        totale = ottieniTotaleSaldo();
-        reportSpese();
-        printstampaSpese();
+        printSpese();
+// stampare l'output
+        String schedaSpese = printSpese();
+        JOptionPane.showMessageDialog(null, schedaSpese);
+        anticipoValuta();
+
     }
 
     static void getSpese() {
 
         for (int i = 0; i < spese.length; i++) {
-            spese[i] = mySpesa();
-
+            String strSpese = JOptionPane.showInputDialog("dimmi valore movimento (es. 0,1 o 250)");
+            spese[i] = Integer.parseInt(strSpese);
         }
-
     }
 
-    static int ottieniTotaleSaldo() {
-        int newsaldo = 0;
+  
+
+    static String printSpese() {
+        String ris = "Elenco spese";
+        int totale = 0;
         for (int i = 0; i < spese.length; i++) {
-            newsaldo = newsaldo + spese[i];
+            stampa += (i + 1) + " - " + spese[i];
+            totale = totale + spese[i];
+
         }
-        return newsaldo;
 
-    }
-
-    static int mySpesa() {
-        int ris = 0;
-        String strspese = JOptionPane.showInputDialog("dimmi valore movimento (es. 0,1 o 250)");
-
+        ris = ris + totale + "\n";
+        
+        if (anticipoValuta > totale) {
+            stampa += "avanzati Euro" + (anticipoValuta - totale);
+        } else {
+            stampa += "devi Euro" + (totale - anticipoValuta);
+        }
         return ris;
     }
-
-    static int ottieniAnticipoValuta() {
-        int ris = 0;
-        JOptionPane.showInputDialog("quanto hai anticipato");
-
-        return ris;
-    }
-
-    static int reportSpese() {
-        int ris = 0;
-                reportSpese = totale - anticipoValuta;
-
-if (reportSpese < anticipoValuta) {
-                    stampa += " hai avanzato " + reportSpese;
-} else {
-    stampa += " devi avere " + (anticipoValuta * (-1));
     
-}
-return ris;
-    }
-
-    static void printstampaSpese() {
-        String stampa = "";
-        //inizio fase lettura e conti vari
-
-        for (int i = 0; i < spese.length; i++) {
-            int nriga = i + 1;
-            stampa += nriga + "  ";
-            if (spese[i] > 0) {
-                stampa += " + " + spese[i] + "\n";
-
-            } else {
-                stampa += spese[i] + "\n";
-
-            }
-
-            stampa += " il saldo totale è di " + reportSpese() + totale;
-            JOptionPane.showMessageDialog(null, stampa);
-        }
-
+      static void anticipoValuta() {
+        String strAnticipo = JOptionPane.showInputDialog("dimmi quanto hai anticipato");
     }
 
 }
